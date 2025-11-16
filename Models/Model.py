@@ -121,7 +121,7 @@ class DHModel:
         return [m for m in cls.MODELS if keyword.lower() in m.lower()]
 
     @classmethod
-    def print_DH_table(cls, name: str):
+    def print_dh_table(cls, name: str):
         model = cls.get_model(name)
         df = pd.DataFrame(model)
         print(f"\nDH Parameters : {name}:\n")

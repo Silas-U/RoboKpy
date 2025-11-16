@@ -12,7 +12,7 @@ authors = [
     {name = "Silas Udofia", email = "slasudofia469@gmail.com" }
 ]
 
-license = {text = "Apache"}
+license = {file = "LICENSE"}
 
 dependencies = [
     "numpy>=1.17.4",
@@ -26,3 +26,6 @@ requires-python = ">=3.7"
 Homepage = "https://github.com/Silas-U/RoboKpy"
 Repository = "https://github.com/Silas-U/RoboKpy"
 Issues = "https://github.com/Silas-U/RoboKpy/issues"
+
+[tool.setuptools.packages.find]
+include = ["robokpy*"]

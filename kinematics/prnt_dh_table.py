@@ -10,4 +10,4 @@ You may obtain a copy of the License at: http://www.apache.org/licenses/LICENSE-
 
 from Models.Model import DHModel
 #-------------------------------
-DHModel.print_DH_table("Puma560")
+DHModel.print_dh_table("Puma560")

@@ -25,14 +25,14 @@ It provides a clean object-oriented framework for **Forward Kinematics**, **Inve
 
 ## Trajectory planning preview
 ```python
-  robot.traj.scale_waypoint_vel = 2.0 # waypoint velocities scaled.
+  robot.traj.scale_waypoint_vel = 2.0
 ```
 <p align="center">
   <img src="assets/GIF_20251114_180218_899.gif" >
 </p>
 
 ```python
-  robot.traj.scale_waypoint_vel = 0.0 # waypoint velocities reset to 0.0
+  robot.traj.scale_waypoint_vel = 0.0
 ```
 <p align="center">
   <img src="assets/GIF_20251114_175247_624.gif" >
@@ -65,10 +65,9 @@ We will load the DH parameters of the Puma560 robot defined in the ```Model.py``
 from Models.Model import DHModel
 from robokpy import Init_Model
 
-DHModel.print_DH_table('Puma560')
+DHModel.print_dh_table('Puma560')
 model_params = DHModel.get_model('Puma560')
 ```
-DH table printed on the terminal
 ```bash
 DH Parameters : Puma560:
 
@@ -100,7 +99,23 @@ End-effector transform
 
 End-effector pose: [ 0.59630552,  0.15,  -0.01435103,  -0,  1.57078531, -0 ] 
 ```
-We can solve inverse kinematics very easily. We first set an initial guess which helps our inverse kinematics solver converge faster and choose a pose defined in terms of position and orientation.
+We can also compute the robots Jacobian.
+```python
+J = rb.jac.compute()
+print("Jacobian Matrix:\n", J) 
+```
+The Jacobian matrix is a 6×n matrix which maps the joint speeds of the robot to the end-effector’s linear and angular velocities, in this case a 6×6 matrix for a 6 degree of freedom robot.
+
+```bash
+Jacobian Matrix:
+ [[ 0.15        0.01435103  0.3196803   0.         -0.         -0.        ]
+  [ 0.59630552  0.          0.         -0.          0.          0.        ]
+  [-0.          0.59630552  0.29097738  0.          0.          0.        ]
+  [ 0.          0.          0.          0.70711327 -0.          1.        ]
+  [ 0.         -1.         -1.         -0.         -1.         -0.        ]
+  [ 1.          0.          0.         -0.70710029  0.          0.00001102]]
+```
+We can solve inverse kinematics very easily. We set an initial guess which helps our inverse kinematics solver converge faster and choose a pose defined in terms of position and orientation.
 
 ```python
 robot.ik.initial_guess([0, 90, -90, 0, 0, 0 ])
