@@ -1,0 +1,20 @@
+[build-system]
+requires = ["setuptools>=61.0"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "RoboKpy"
+version = "1.0.0"
+description = "Python library for serial robot manipulator kinematic"
+readme = "README.md"
+authors = [
+    {name = "Silas Udofia"}
+]
+license = {text = "Apache"}
+dependencies = [
+    "numpy>=1.17.4",
+    "matplotlib>=3.1",
+    "scipy",
+    "pandas"
+]
+requires-python = ">=3.7"
