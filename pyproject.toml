@@ -5,12 +5,15 @@ build-backend = "setuptools.build_meta"
 [project]
 name = "RoboKpy"
 version = "1.0.0"
-description = "Python library for serial robot manipulator kinematic"
+description = "A modular and extensible Python library for performing robotic kinematic analysis." 
 readme = "README.md"
+
 authors = [
-    {name = "Silas Udofia"}
+    {name = "Silas Udofia", email = "slasudofia469@gmail.com" }
 ]
+
 license = {text = "Apache"}
+
 dependencies = [
     "numpy>=1.17.4",
     "matplotlib>=3.1",
@@ -18,3 +21,8 @@ dependencies = [
     "pandas"
 ]
 requires-python = ">=3.7"
+
+[project.urls]
+Homepage = "https://github.com/Silas-U/RoboKpy"
+Repository = "https://github.com/Silas-U/RoboKpy"
+Issues = "https://github.com/Silas-U/RoboKpy/issues"
