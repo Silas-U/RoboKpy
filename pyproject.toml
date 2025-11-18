@@ -9,7 +9,7 @@ description = "A modular and extensible Python library for performing robotic ki
 readme = "README.md"
 
 authors = [
-    {name = "Silas Udofia", email = "slasudofia469@gmail.com" }
+    {name = "Silas Udofia", email = "silasudofia469@gmail.com" }
 ]
 
 license = {file = "LICENSE"}

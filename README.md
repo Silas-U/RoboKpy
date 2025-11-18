@@ -40,34 +40,47 @@ It provides a clean object-oriented framework for **Forward Kinematics**, **Inve
 
 ## Getting started
 
-#### RoboKpy requires Python >= 3.6
-### Using pip
-#### Install a snapshot from PyPI
+#### RoboKpy requires Python >= 3.6 so make sure python is installed on your machine.
+### Create a Virtual Environment
+Open your terminal inside your project folder (RoboKpy/) and run:
+#### Windows
+```bash
+python -m venv venv
+venv\Scripts\activate
+```
+#### macOS/Linux
 
 ```bash
-pip3 install RoboKpy-python
+python3 -m venv venv
+source venv/bin/activate
 ```
----
-
-### From GitHub (development)
+You should see:
 ```bash
-git clone https://github.com/Silas-U/RoboKpy.git
-cd RoboKpy
-pip install -e .
+(venv) C:\Users\...
 ```
+This means you are inside the virtual environment.
 
----
+## Install from GitHub
+Install from main
+```bash
+pip install git+https://github.com/Silas-U/RoboKpy.git
+```
+Install from a release/tag
+```bash
+pip install git+https://github.com/Silas-U/RoboKpy.git@v1.0.0
+```
 
 ## Code Examples
 
 We will load the DH parameters of the Puma560 robot defined in the ```Model.py``` file and print the DH table.
 ```python
-from Models.Model import DHModel
 from robokpy import Init_Model
+from Model import DHModel
 
 DHModel.print_dh_table('Puma560')
 model_params = DHModel.get_model('Puma560')
 ```
+You should see the DH table displayed on your terminal
 ```bash
 DH Parameters : Puma560:
 
@@ -79,9 +92,9 @@ joint_name joint_type  link_length  twist  joint_offset  theta  offset
         j5          r       0.0000  -90.0        0.0000    0.0     0.0
         j6          r       0.0000    0.0        0.0000    0.0     0.0
 ```
-We will initialize the dh model using the model parameters we loaded, compute the forward kinematics and print the end effector transformation matrix and pose
+We will initialize the DH model using the model parameters we loaded, compute the forward kinematics and print the end effector transformation matrix and pose
 ```python
-robot = Init_Model(model_params, robot_name='PUMA560')
+robot = Init_Model(model_params, robot_name='PUMA560', plt_model=False)
 
 qn = [0, 0.7854, 3.1416, 0, 0.7854, 0]
 robot.fk.compute(qn, rads=True)
@@ -101,8 +114,8 @@ End-effector pose: [ 0.59630552,  0.15,  -0.01435103,  -0,  1.57078531, -0 ]
 ```
 We can also compute the robots Jacobian.
 ```python
-J = rb.jac.compute()
-print("Jacobian Matrix:\n", J) 
+J = robot.jac.compute()
+print("\nJacobian Matrix:\n", J) 
 ```
 The Jacobian matrix is a 6×n matrix which maps the joint speeds of the robot to the end-effector’s linear and angular velocities, in this case a 6×6 matrix for a 6 degree of freedom robot.
 
@@ -138,8 +151,14 @@ IK Solution (deg): [0.0, 90.0, -90.0, 0.0, 0.0, 0.0]
 ```
 We can visualize the ready pose ```qr``` configuration which shows a skeleton of the robot with lines that connect the link coordinate frames as deﬁned by the Denavit-Hartenberg parameters.
 
+To show or plot DH models always make sure to set the ```plt_model``` to ```True```
+
 ```python
-robot.mviz.scale_viz(0.55, 0.05)
+robot = Init_Model(model_params, robot_name='PUMA560', plt_model=True)
+```
+
+```python
+robot.mviz.scale_viz(0.45, 0.05)
 robot.mviz.show_dh_model(ik_solution)
 ```
 <p align="center">

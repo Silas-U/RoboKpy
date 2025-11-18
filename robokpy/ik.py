@@ -20,7 +20,7 @@ class InverseKinematics:
         self.success = False
         self.initial_guess_val = None
         self.initial_guess_rads = False
-
+        
     def initial_guess(self, val, rads=False):
         self.initial_guess_rads = rads
         self.initial_guess_val = val
@@ -32,6 +32,12 @@ class InverseKinematics:
         self.fk.compute(self.initial_guess_val, rads=self.initial_guess_rads)
 
     def solve(self, target_position, mask=None, tol=1e-3, max_iter=500, rpy_deg=False, output_deg=False):
+        
+        print("\nIK:searching...")
+        print("────────────────────────────────────────────────────────")
+        print(f"{'Iter':>4} | {'Error':>12} | {'Δθ':>12}")
+        print("────────────────────────────────────────────────────────")
+
         self.init_guess()
         if mask is None:
             mask = [1, 1, 1, 1, 1, 1]
@@ -54,7 +60,7 @@ class InverseKinematics:
             r_desired = np.array(target_position[-3:])
         
         i = 0
-        
+
         while True:
             current_position = self.fk.get_target_xyz()
             current_orientation = self.fk.get_target_rpy()
@@ -90,14 +96,19 @@ class InverseKinematics:
             th += d_theta
             self.fk.compute(th, rads=True)
 
-            if not i % 10:
-                print(f'====iteration %d ==== : conv error = %s' % (i, np.linalg.norm(error)))
+            step_norm = np.linalg.norm(d_theta)
+
+            if i % 10 == 0:
+                print(f"{i:4d} | {np.linalg.norm(error):12.6e} | {step_norm:12.6e}")
+
             final_conv_error = f"{np.linalg.norm(error):.6f}"
 
             i += 1
 
         if self.success:
-            print(f"convergence achieved in iteration {i} : conv error {final_conv_error}")
+            print("────────────────────────────────────────────────────────")
+            print(f"Converged in {i} iterations")
+            print(f"Final error norm: {final_conv_error}")
             if i == 0:
                 self.model.joint_states_deg = output_deg
                 j_states = self.fk.get_joint_states(in_degrees=output_deg)
@@ -108,6 +119,9 @@ class InverseKinematics:
             return j_states
         else:
             self.fk.compute(np.zeros(self.model.num_of_joints), rads=True)
-            print("\nWarning!: the iterative algorithm has not reached convergence to the desired precision")
+            print("\nWarning!: solver failed to converge within maximum iterations.")
+            print(f"Final error norm: {final_conv_error}")
+            print("────────────────────────────────────────────────────────")
+            # print("\nWarning!: the iterative algorithm has not reached convergence to the desired precision")
             return np.zeros(self.model.num_of_joints)
         

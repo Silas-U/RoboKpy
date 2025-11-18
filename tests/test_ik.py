@@ -1,7 +1,7 @@
 import unittest
 import numpy as np
 from robokpy import Init_Model
-from Models.Model import DHModel
+from Model import DHModel
 import matplotlib
 matplotlib.use("Agg")
 

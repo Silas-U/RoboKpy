@@ -64,16 +64,6 @@ class DHModel:
         {'joint_name': 'j6', 'joint_type': 'r', 'link_length': 0,   'twist': 0.0,  'joint_offset': 0.0, 'theta': 0.0, 'offset': 0.0},
     ],
 
-    'Baxter': [
-        {'joint_name': 'j1', 'joint_type': 'r', 'link_length': 0.069,   'twist': -90.0,   'joint_offset': 0.27,  'theta': 0.0, 'offset': 0.0},
-        {'joint_name': 'j2', 'joint_type': 'r', 'link_length': 0, 'twist': 90.0,  'joint_offset': 0.0, 'theta': 0.0, 'offset': 0},
-        {'joint_name': 'j3', 'joint_type': 'r', 'link_length': 0.069, 'twist': -90.0, 'joint_offset': 0.364, 'theta': 0.0, 'offset': 0.0},
-        {'joint_name': 'j4', 'joint_type': 'r', 'link_length': 0,  'twist': 90.0,  'joint_offset': 0.0,  'theta': 0.0, 'offset': 0.0},
-        {'joint_name': 'j5', 'joint_type': 'r', 'link_length': 0.01,   'twist': -90.0, 'joint_offset': 0.374, 'theta': 0.0, 'offset': 0.0},
-        {'joint_name': 'j6', 'joint_type': 'r', 'link_length': 0,   'twist': 90.0,  'joint_offset': 0.0, 'theta': 0.0, 'offset': 0.0},
-        {'joint_name': 'j7', 'joint_type': 'r', 'link_length': 0,   'twist': 0.0,  'joint_offset': 0.28, 'theta': 0.0, 'offset': 0.0},
-    ],
-
     'Cobra600': [
         {'joint_name': 'j1', 'joint_type': 'r', 'link_length': 0.325,  'twist': 0.0, 'joint_offset': 0.387,  'theta': 0.0, 'offset': 0.0},
         {'joint_name': 'j2', 'joint_type': 'r', 'link_length': 0.275, 'twist': np.pi,  'joint_offset': 0.0, 'theta': 0.0, 'offset': 0.0},

@@ -9,7 +9,7 @@ You may obtain a copy of the License at: http://www.apache.org/licenses/LICENSE-
 """
 
 from robokpy import Init_Model
-from Models.Model import DHModel
+from Model import DHModel
 import numpy as np
 
 model = DHModel.get_model('UR10')

@@ -126,14 +126,16 @@ class ForwardKinematics:
             r = R.from_matrix(rotation_matrix)
             quats = r.as_quat(canonical=False)
             self.quartenion = quats
+
             euler_angles = R.from_quat(quats).as_euler('xyz', degrees=deg)
+
             if merge_res:
                 return np.concatenate([position, euler_angles])
             else:
                 return np.array([position, euler_angles])
         except ValueError as e:
             print(f"Error: {e}")
-    
+
     def get_target(self):
         tar = self.SE3(self.get_transforms(self.transform_length()), merge_res=True)
         return tar

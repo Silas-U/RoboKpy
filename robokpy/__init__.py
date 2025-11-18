@@ -15,6 +15,16 @@ from .jacobian import Jacobian
 from .trajectory import TrajectoryPlanner
 from .plotting import Plotter
 from .mviz import VizModel
+from .dhmodel_generator import generate_model_file
+from .dhmodel_loader import load_user_models
+
+# Auto-generate Model.py on package import
+MODEL_FILE_PATH = generate_model_file()
+
+# Load all user-defined models
+USER_MODELS = load_user_models()
+
+__all__ = ["USER_MODELS", "MODEL_FILE_PATH"]
 
 class Init_Model:
     """High level API wrapping."""

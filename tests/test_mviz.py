@@ -3,7 +3,7 @@ import numpy as np
 import matplotlib
 matplotlib.use("Agg")
 from robokpy.mviz import VizModel
-from Models.Model import DHModel
+from Model import DHModel
 from robokpy.model import RobotModel
 from robokpy.fk import ForwardKinematics
 

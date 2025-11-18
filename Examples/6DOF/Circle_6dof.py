@@ -9,7 +9,7 @@ You may obtain a copy of the License at: http://www.apache.org/licenses/LICENSE-
 """
 
 from robokpy import Init_Model
-from Models.Model import DHModel
+from Model import DHModel
 
 model = DHModel.get_model('6dof')
 rb = Init_Model(model, robot_name='6dof', twist_in_rads=True, plt_model=True)

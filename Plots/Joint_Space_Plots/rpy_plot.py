@@ -9,7 +9,7 @@ You may obtain a copy of the License at: http://www.apache.org/licenses/LICENSE-
 """
 
 from robokpy import Init_Model
-from Models.Model import DHModel
+from Model import DHModel
 
 model = DHModel.get_model('Puma561')
 robot = Init_Model(model, robot_name='Puma561', plt_model=True)
@@ -26,8 +26,9 @@ robot.model.set_eular_in_deg(True)
 robot.traj.set_traj_time(5.0)
 robot.traj.scale_waypoint_vel = 0.0
 robot.traj.traj_type('qu')
+
 trajectory = robot.traj.create_trajectory(waypoints, traj_method='js', n_samples=20)
-print(robot.traj.get_waypoint_velocities())
+print("\nwaypoint velocities:\n", robot.traj.get_waypoint_velocities())
 robot.plotter.plot_traj(plot_type='rpy', selected_plot='all')
 
 robot.mviz.scale_viz(0.25, 0.04)

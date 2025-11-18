@@ -9,7 +9,7 @@ You may obtain a copy of the License at: http://www.apache.org/licenses/LICENSE-
 """
 
 from robokpy import Init_Model
-from Models.Model import DHModel
+from Model import DHModel
 
 model = DHModel.get_model('Cylindrical')
 rb = Init_Model(model, robot_name='Cylindrical', plt_model=True)
