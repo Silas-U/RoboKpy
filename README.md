@@ -67,7 +67,7 @@ pip install git+https://github.com/Silas-U/RoboKpy.git
 ```
 Install from a release/tag
 ```bash
-pip install git+https://github.com/Silas-U/RoboKpy.git@v1.0.0
+pip install git+https://github.com/Silas-U/RoboKpy.git@v0.1.0
 ```
 
 ## Code Examples
