@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from robokpy.model import RobotModel
+from Robokpy.model import RobotModel
 
 
 class TestRobotModel(unittest.TestCase):

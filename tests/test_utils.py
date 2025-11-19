@@ -1,6 +1,6 @@
 import unittest
 import numpy as np
-from robokpy.utils import validate_keys, clamp, skew, ALLOWED_KEYS
+from Robokpy.utils import validate_keys, clamp, skew, ALLOWED_KEYS
 
 
 class TestUtils(unittest.TestCase):

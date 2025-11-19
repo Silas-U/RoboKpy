@@ -7,7 +7,7 @@ Created by RoboKpy
 """
 
 import numpy as np
-from robokpy.dhmodel_base import BaseDHModel
+from Robokpy.dhmodel_base import BaseDHModel
 
 
 class DHModel(BaseDHModel):

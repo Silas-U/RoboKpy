@@ -1,10 +1,10 @@
 import unittest
 import numpy as np
-from robokpy.trajectory import TrajectoryPlanner
-from robokpy.model import RobotModel
-from robokpy.fk import ForwardKinematics
-from robokpy.ik import InverseKinematics
-from robokpy.jacobian import Jacobian
+from Robokpy.trajectory import TrajectoryPlanner
+from Robokpy.model import RobotModel
+from Robokpy.fk import ForwardKinematics
+from Robokpy.ik import InverseKinematics
+from Robokpy.jacobian import Jacobian
 
 
 class TestTrajectoryPlanner(unittest.TestCase):

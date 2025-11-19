@@ -8,13 +8,22 @@ you may not use this file except in compliance with the License.
 You may obtain a copy of the License at: http://www.apache.org/licenses/LICENSE-2.0
 """
 
-from robokpy import Init_Model
+from Robokpy import Init_Model
 from Model import DHModel
 
-robot_model = DHModel.get_model("Puma560")
-rb = Init_Model(robot_model, robot_name="Puma560", twist_in_rads=False)
 
-rb.fk.compute([0, 0.7854, 3.1416, 0, 0.7854, 0], rads=True)  
-# Jacobian
+# Initialize Puma560 Robot
+robot_model = DHModel.get_model("Puma560")
+rb = Init_Model(
+    robot_model, 
+    robot_name="Puma560", 
+    twist_in_rads=False
+)
+
+# Compute Forward Kinematics
+joint_angles = [0, 0.7854, 3.1416, 0, 0.7854, 0]  # radians
+rb.fk.compute(joint_angles, rads=True)
+
+# Compute Jacobian
 J = rb.jac.compute()
-print("Jacobian Matrix:\n", J) 
+print("Jacobian Matrix:\n", J)

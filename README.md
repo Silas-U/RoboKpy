@@ -42,7 +42,7 @@ It provides a clean object-oriented framework for **Forward Kinematics**, **Inve
 
 RoboKpy requires Python >= 3.6 so make sure python is installed on your machine.
 ### Create a virtual environment
-Open your terminal inside your project folder (RoboKpy/) and run:
+Open your terminal inside your project folder and run:
 #### Windows
 ```bash
 python -m venv venv
@@ -76,7 +76,7 @@ We will load the DH parameters of the Puma560 robot defined in the ```Model.py``
 
 Note:  The ```Model.py```file will be auto-generated on first run.
 ```python
-from robokpy import Init_Model
+from Robokpy import Init_Model
 from Model import DHModel
 
 DHModel.print_dh_table('Puma560')
@@ -99,6 +99,7 @@ We will initialize the DH model using the model parameters we loaded, compute th
 robot = Init_Model(model_params, robot_name='PUMA560', plt_model=False)
 
 qn = [0, 0.7854, 3.1416, 0, 0.7854, 0]
+
 robot.fk.compute(qn, rads=True)
 
 print("End-effector transform:\n", robot.fk.get_htm(),'\n')
@@ -136,7 +137,9 @@ We can solve inverse kinematics very easily. We set an initial guess which helps
 robot.ik.initial_guess([0, 90, -90, 0, 0, 0 ])
 
 qr = [ 0.02029841, -0.15,  0.8636,   0,   0,   0]
+
 ik_solution = robot.ik.solve(qr)
+
 print("\nIK Solution (rads):", ik_solution)
 ```
 

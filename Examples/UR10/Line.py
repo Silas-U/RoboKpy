@@ -8,25 +8,44 @@ you may not use this file except in compliance with the License.
 You may obtain a copy of the License at: http://www.apache.org/licenses/LICENSE-2.0
 """
 
-from robokpy import Init_Model
+from Robokpy import Init_Model
 from Model import DHModel
 
-model = DHModel.get_model('UR10')
-robot = Init_Model(model, robot_name='UR10', plt_model=True)
 
+# Initialize UR10 Robot
+model = DHModel.get_model("UR10")
+robot = Init_Model(
+    model,
+    robot_name="UR10",
+    plt_model=True
+)
+
+# Define Task-Space Waypoints
+# Format: [x, y, z, roll, pitch, yaw]
 waypoints = [
-    [0.3, 0.2, 0.2,  3.14159265,  0.,  -0.52359878],
-    [0.3, -0.2, 0.2,  3.14159265,  0., -0.52359878],
-    [0.3, 0.2, 0.2,  3.14159265,  0.,  -0.52359878],
-    [0.3, -0.2, 0.2,  3.14159265,  0., -0.52359878],
-    [0.3, 0.2, 0.2,  3.14159265,  0.,  -0.52359878],
+    [0.3,  0.2, 0.2, 3.14159265, 0., -0.52359878],
+    [0.3, -0.2, 0.2, 3.14159265, 0., -0.52359878],
+    [0.3,  0.2, 0.2, 3.14159265, 0., -0.52359878],
+    [0.3, -0.2, 0.2, 3.14159265, 0., -0.52359878],
+    [0.3,  0.2, 0.2, 3.14159265, 0., -0.52359878],
 ]
 
+# Generate Joint-Space Trajectory
 robot.traj.set_traj_time(5.0)
-robot.traj.traj_type('qu')
-trajectory = robot.traj.create_trajectory(waypoints, traj_method='js', n_samples=20)
-robot.plotter.plot_traj(plot_type='jc', selected_plot='all')
+robot.traj.traj_type("qu")
+trajectory = robot.traj.create_trajectory(
+    waypoints,
+    traj_method="js",
+    n_samples=20
+)
 
+# Visualize Trajectory
 robot.mviz.scale_viz(0.3, 0.04)
-robot.mviz.show_target(waypoints, 0.04, sc=True)
-robot.mviz.plot(trajectory, show_path=True, show_via_points=True, show_joint_label=True, repeat=True)
+robot.mviz.show_target(waypoints, axis_length=0.04, sc=True)
+robot.mviz.plot(
+    trajectory,
+    show_path=True,
+    show_via_points=True,
+    show_joint_label=True,
+    repeat=True
+)

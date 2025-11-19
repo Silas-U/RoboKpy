@@ -8,12 +8,18 @@ you may not use this file except in compliance with the License.
 You may obtain a copy of the License at: http://www.apache.org/licenses/LICENSE-2.0
 """
 
-from robokpy import Init_Model
+from Robokpy import Init_Model
 from Model import DHModel
 
-model = DHModel.get_model('Puma561')
-rb = Init_Model(model, robot_name='Puma561')
+# Initialize Puma561 Robot
+model = DHModel.get_model("Puma561")
+rb = Init_Model(model, robot_name="Puma561")
 
-conf = [90, 45, -60, 20, 0, 90]
-rb.fk.compute(conf)
-rb.jac.check_singularity()
+# Define Joint Configuration [deg]
+joint_conf = [90, 45, -60, 20, 0, 90]
+
+# Compute Forward Kinematics
+rb.fk.compute(joint_conf)
+
+# Check for Singularities
+rb.jac.singular_conf_check()

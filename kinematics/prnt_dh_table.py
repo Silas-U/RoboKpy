@@ -9,5 +9,6 @@ You may obtain a copy of the License at: http://www.apache.org/licenses/LICENSE-
 """
 
 from Model import DHModel
-#-------------------------------
+
+# Print Denavit-Hartenberg Table
 DHModel.print_dh_table("Puma560")

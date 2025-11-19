@@ -2,10 +2,10 @@ import unittest
 import numpy as np
 import matplotlib
 matplotlib.use("Agg")
-from robokpy.mviz import VizModel
+from Robokpy.mviz import VizModel
 from Model import DHModel
-from robokpy.model import RobotModel
-from robokpy.fk import ForwardKinematics
+from Robokpy.model import RobotModel
+from Robokpy.fk import ForwardKinematics
 
 
 class TestVizModel(unittest.TestCase):

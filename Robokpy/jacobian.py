@@ -40,7 +40,7 @@ class Jacobian:
         self.jac = J
         return J
 
-    def check_singularity(self, threshold=1e-5):
+    def singular_conf_check(self, threshold=1e-5):
         J = self.compute()
         rank = np.linalg.matrix_rank(J, tol=threshold)
         jnt_config = self.fk.get_joint_states(in_degrees=True)

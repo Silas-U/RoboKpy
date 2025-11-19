@@ -8,7 +8,7 @@ you may not use this file except in compliance with the License.
 You may obtain a copy of the License at: http://www.apache.org/licenses/LICENSE-2.0
 """
 
-from robokpy import Init_Model
+from Robokpy import Init_Model
 from Model import DHModel
 
 model = DHModel.get_model('Puma560')
