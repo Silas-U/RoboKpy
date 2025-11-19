@@ -40,8 +40,8 @@ It provides a clean object-oriented framework for **Forward Kinematics**, **Inve
 
 ## Getting started
 
-#### RoboKpy requires Python >= 3.6 so make sure python is installed on your machine.
-### Create a Virtual Environment
+RoboKpy requires Python >= 3.6 so make sure python is installed on your machine.
+### Create a virtual environment
 Open your terminal inside your project folder (RoboKpy/) and run:
 #### Windows
 ```bash
@@ -73,6 +73,8 @@ pip install git+https://github.com/Silas-U/RoboKpy.git@v1.0.0
 ## Code Examples
 
 We will load the DH parameters of the Puma560 robot defined in the ```Model.py``` file and print the DH table.
+
+Note:  The ```Model.py```file will be auto-generated on first run.
 ```python
 from robokpy import Init_Model
 from Model import DHModel
@@ -166,7 +168,7 @@ robot.mviz.show_dh_model(ik_solution)
 </p>
 
 ## Run some examples
-have a look in the RoboKpy [examples](https://github.com/Silas-U/RoboKpy_new/tree/main/Examples)
+have a look in the RoboKpy [Examples](https://github.com/Silas-U/RoboKpy/tree/main/Examples) and [Plots](https://github.com/Silas-U/RoboKpy/tree/main/Plots)
 folder for many ready to run examples.
 
 Here we present some predefined DH models, feel free to add yours.
@@ -177,7 +179,6 @@ Here we present some predefined DH models, feel free to add yours.
 | `UR10` | Revolute | 6 | Industrial arm (Universal Robots) |
 | `Cobra600` | SCARA | 4 | Selective compliance robot arm |
 | `Cylindrical` | Mixed | 4 | R-P-P-P robot |
-| `scara` | Revolute + Prismatic | 3 | Compact SCARA arm |
 | `2dof`, `6dof` | Custom | Variable | Example models for testing |
 
 ---
