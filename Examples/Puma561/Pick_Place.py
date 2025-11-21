@@ -31,7 +31,6 @@ waypoints = [
 
 # Trajectory Configuration
 robot.model.set_eular_in_deg(True)    # Use degrees for Euler angles
-robot.traj.set_traj_time(5.0)        # Total trajectory time (seconds)
 robot.traj.traj_type('qu')           # Quintic trajectory
 
 # Generate trajectory

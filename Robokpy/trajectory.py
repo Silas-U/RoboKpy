@@ -72,14 +72,6 @@ class TrajectoryPlanner:
     def set_traj_time(self, t_period):
         if type(t_period) not in [int, float]:
             raise TypeError("traj_time must be of type integer or float")
-        
-        # if type(target_position) not in [np.ndarray, list]:
-        #     raise TypeError(f"Expected a list of cartesian waypoints but got {type(target_position)}")
-        # if type(tol) not in [int, float]:
-        #     raise TypeError("tolerance must be of type integer or float")
-        # if type(max_iter) not in [int, float]:
-        #     raise TypeError("max_iter must be of type integer or float")
-        
         self.t_traj = t_period
     
     def get_waypoint_velocities(self):

@@ -31,7 +31,6 @@ waypoints = [
 ]
 
 # Generate Joint-Space Trajectory
-robot.traj.set_traj_time(5.0)
 robot.traj.traj_type("qu")
 trajectory = robot.traj.create_trajectory(
     waypoints,

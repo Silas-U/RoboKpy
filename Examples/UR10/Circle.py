@@ -22,7 +22,7 @@ robot = Init_Model(
 )
 
 # Define Circle Trajectory in Task Space
-# Format: [x, y, z, roll, pitch, yaw]
+# Format: [x, y, z, rx, ry, rz]
 center = [0.3, 0.1, 0.1, 3.14159265, 0.0, -0.52359878]  # Center of the circle
 radius = -0.07  # Negative radius rotates circle in opposite direction
 circle_waypoints = robot.traj.create_circle_traj(radius=radius, cent=center)

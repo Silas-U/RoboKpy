@@ -24,7 +24,6 @@ waypoints = [
 ]
 
 # Configure trajectory parameters
-robot.traj.set_traj_time(5.0)    # Total trajectory time (seconds)
 robot.traj.traj_type('qu')       # Quintic trajectory
 
 # Generate trajectory
