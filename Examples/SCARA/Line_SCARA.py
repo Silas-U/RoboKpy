@@ -31,7 +31,7 @@ robot.model.set_joint_limits({
 })
 
 # Define Task-Space Waypoints
-# Format: [x, y, z, roll, pitch, yaw]
+# Format: [x, y, z, rx, ry, rz]
 waypoints = [
     [0.35, 0.10, 0.30, 3.14159265, 0.0,  1.57079633],
     [0.15, 0.10, 0.30, 3.14159265, 0.0,  1.30899694],

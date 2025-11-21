@@ -1,14 +1,15 @@
-"""
-Author: Silas Udofia
-Date: 2024-08-02
-GitHub: https://github.com/Silas-U/RoboKpy/tree/main
+# """
+# Author: Silas Udofia
+# Date: 2024-08-02
+# GitHub: https://github.com/Silas-U/RoboKpy/tree/main
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at: http://www.apache.org/licenses/LICENSE-2.0
-"""
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at: http://www.apache.org/licenses/LICENSE-2.0
+# """
 
 import matplotlib.pyplot as plt
+from scipy.spatial.transform import Rotation as R, Slerp
 import numpy as np
 
 class Plotter:
@@ -45,11 +46,19 @@ class Plotter:
 
         position = [pos_x, pos_y, pos_z]
 
-        roll = [pose[i][5] for i in range(len(pose))]
-        pitch = [pose[i][4] for i in range(len(pose))]
-        yaw = [pose[i][3] for i in range(len(pose))]
+        qx = [pose[i][3] for i in range(len(pose))]
+        qy = [pose[i][4] for i in range(len(pose))]
+        qz = [pose[i][5] for i in range(len(pose))]
+        qw = [pose[i][6] for i in range(len(pose))]
 
-        orientation = [roll, pitch, yaw]
+        quart = np.transpose([qx,qy,qz,qw])
+
+        eular = R.from_quat(quart).as_euler('xyz', degrees=False)
+        roll = [eular[i][2] for i in range(len(eular))]
+        pitch = [eular[i][1] for i in range(len(eular))]
+        yaw = [eular[i][0] for i in range(len(eular))]
+
+        orientation = [yaw, pitch, roll]
 
         num_of_joints = self.model.get_num_of_joints()
 
@@ -141,15 +150,15 @@ class Plotter:
                 plt.figure(figsize=(6, 6))
                 for i, (rx, ry, rz, title) in enumerate(quantities):
                     if selected_plot == "r":
-                        plt.plot(self.trajectory.t_fine, rx, label='Roll', color="#1E7BF5")
+                        plt.plot(self.trajectory.t_fine, rz, label='Roll', color="#1E7BF5")
                     elif selected_plot == "p":
                         plt.plot(self.trajectory.t_fine, ry, label='Pitch', color="#E68507")
                     elif selected_plot == "y":
-                        plt.plot(self.trajectory.t_fine, rz, label='Yaw', color="#FDDC21")
+                        plt.plot(self.trajectory.t_fine, rx, label='Yaw', color="#FDDC21")
                     elif selected_plot == "all":
-                        plt.plot(self.trajectory.t_fine, rx, label='Roll', color="#1E7BF5")
+                        plt.plot(self.trajectory.t_fine, rz, label='Roll', color="#1E7BF5")
                         plt.plot(self.trajectory.t_fine, ry, label='Pitch', color="#E68507")
-                        plt.plot(self.trajectory.t_fine, rz, label='Yaw', color="#FDDC21")
+                        plt.plot(self.trajectory.t_fine, rx, label='Yaw', color="#FDDC21")
                     else:
                         raise ValueError(f"Unsupported plot type {selected_plot}: supported -> r:p:y:all")
                         
@@ -162,7 +171,6 @@ class Plotter:
                 plt.show()
             
             elif plot_type == 'traj':
-
                 self.fig = plt.figure(figsize=(6, 6))
 
                 if projection == '2d':
@@ -179,9 +187,6 @@ class Plotter:
                     end_x, end_y = position[0][-1], position[1][-1]
                     ax.scatter(start_x, start_y, color='#6BDB03', s=60, label='Start', zorder=5)
                     ax.scatter(end_x, end_y, color='#0385DB', s=60, label='End', zorder=5)
-
-                    ax.text(start_x, start_y + 0.0005, "Start", fontsize=9, fontweight='bold')
-                    ax.text(end_x, end_y + 0.0005, "End", fontsize=9, fontweight='bold')
 
                 elif projection == '3d':
                     ax = self.fig.add_subplot(111, projection='3d')
@@ -219,7 +224,7 @@ class Plotter:
                 plt.show()
 
             else:
-                raise ValueError(f"Unsupported plot type {plot_type}: supported -> jc:xyz:rpy")
+                raise ValueError(f"Unsupported plot type {plot_type}: supported -> jc:xyz:rpy:vel:acc:jer")
         except Exception as e:
             print(f"[Error] Failed to plot {plot_type} trajectory: {e}")
 
@@ -407,9 +412,6 @@ class Plotter:
                         ax.scatter(start_x, start_y, color='#6BDB03', s=60, label='Start', zorder=5)
                         ax.scatter(end_x, end_y, color='#0385DB', s=60, label='End', zorder=5)
 
-                        ax.text(start_x, start_y + 0.0005, "Start", fontsize=9, fontweight='bold')
-                        ax.text(end_x, end_y + 0.0005, "End", fontsize=9, fontweight='bold')
-
                     elif projection == '3d':
                         ax = self.fig.add_subplot(111, projection='3d')
                         ax.set_xlabel('X (m)')
@@ -447,7 +449,7 @@ class Plotter:
                     plt.tight_layout()
                     plt.show()
                 else:
-                    raise ValueError(f"Unsupported plot type {plot_type}: supported -> jc:xyz:rpy")
+                    raise ValueError(f"Unsupported plot type {plot_type}: supported -> jc:xyz:rpy:vel:acc:jer")
             except Exception as e:
                 print(f"[Error] Failed to plot {plot_type} trajectory: {e}")
 
@@ -456,4 +458,5 @@ class Plotter:
         if self.trajectory.traj_method == 'js':
             self.plot_jointspace_traj(plot_type=plot_type, selected_plot=selected_plot, projection=projection)
         elif self.trajectory.traj_method == 'ts':
+            self.trajectory.interp_rots_as_eular()
             self.plot_taskspace_traj(plot_type=plot_type, selected_plot=selected_plot, projection=projection)

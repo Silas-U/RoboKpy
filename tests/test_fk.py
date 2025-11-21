@@ -41,7 +41,7 @@ class TestForwardKinematics(unittest.TestCase):
         self.rb.fk.compute([0.0, 0.0, 0.0, 0.0, 0.0, 0.0], rads=True)
         T = self.rb.fk.get_transform(stop_index=1)
         se3 = self.rb.fk.SE3(T, deg=True, merge_res=False)
-        self.assertEqual(se3.shape, (2, 3))  # position + euler
+        self.assertEqual(se3.shape, (7,))  # position + quartenion
 
     def test_get_joint_states(self):
         self.rb.fk.compute([0.0, 0.0, 0.0, 0.0, 0.0, 0.0], rads=True)

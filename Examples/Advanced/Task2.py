@@ -16,7 +16,7 @@ from Model import DHModel
 def get_waypoints():
     """
     Return trajectory waypoints in the format:
-    [x, y, z, roll, pitch, yaw], with orientation given in degrees.
+    [x, y, z, rx, ry, rz], with orientation given in degrees.
     """
     return [
         [0.30, 0.00, 0.20, 180,   10, 0],

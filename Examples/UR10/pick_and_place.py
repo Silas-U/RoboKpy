@@ -16,7 +16,7 @@ from Model import DHModel
 model = DHModel.get_model("UR10")
 robot = Init_Model(model, robot_name="UR10", plt_model=True)
 
-# Define Task-Space Waypoints [x, y, z, roll, pitch, yaw] in degrees
+# Define Task-Space Waypoints [x, y, z, rx, ry, rz]
 waypoints = [
     [0.20, -0.10, 0.15, 180, 0, -90],  # Target 1
     [0.20, -0.10, 0.07, 180, 0, -30],  # Target 2

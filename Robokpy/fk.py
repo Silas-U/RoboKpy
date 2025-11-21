@@ -1,12 +1,12 @@
-"""
-Author: Silas Udofia
-Date: 2024-08-02
-GitHub: https://github.com/Silas-U/RoboKpy/tree/main
+# """
+# Author: Silas Udofia
+# Date: 2024-08-02
+# GitHub: https://github.com/Silas-U/RoboKpy/tree/main
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at: http://www.apache.org/licenses/LICENSE-2.0
-"""
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at: http://www.apache.org/licenses/LICENSE-2.0
+# """
 
 import math as m
 import numpy as np
@@ -43,6 +43,8 @@ class ForwardKinematics:
     
 
     def compute(self, joint_vars, rads=False):
+        if type(joint_vars) not in [np.ndarray, list]:
+            raise TypeError(f"Expected a list of joint_vars but got {type(joint_vars)}")
         dh_params = self._group_dh(joint_vars, rads)
         t_matrices = []
         for item in dh_params:
@@ -125,14 +127,11 @@ class ForwardKinematics:
             rotation_matrix = T[:3, :3]
             r = R.from_matrix(rotation_matrix)
             quats = r.as_quat(canonical=False)
+            
             self.quartenion = quats
+            self.position = position
 
-            euler_angles = R.from_quat(quats).as_euler('xyz', degrees=deg)
-
-            if merge_res:
-                return np.concatenate([position, euler_angles])
-            else:
-                return np.array([position, euler_angles])
+            return np.concatenate([position, quats])
         except ValueError as e:
             print(f"Error: {e}")
 
@@ -141,13 +140,13 @@ class ForwardKinematics:
         return tar
 
     def get_target_xyz(self):
-        target = self.SE3(self.get_transforms(self.transform_length()))
-        pos_xyz = target[0]
+        self.SE3(self.get_transforms(self.transform_length()))
+        pos_xyz = self.position
         return pos_xyz
-
-    def get_target_rpy(self):
-        target = self.SE3(self.get_transforms(self.transform_length()))
-        rpy = target[-1]
+    
+    def get_target_quart(self):
+        self.SE3(self.get_transforms(self.transform_length()))
+        rpy = self.quartenion
         return rpy
     
     def get_joint_states(self, in_degrees=False):

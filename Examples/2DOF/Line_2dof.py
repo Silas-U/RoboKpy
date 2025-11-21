@@ -39,7 +39,7 @@ def main():
     )
 
     # Visualization Settings
-    robot.mviz.scale_viz(0.25, 0.04)
+    robot.mviz.scale_viz(0.35, 0.04)
     robot.mviz.show_target(waypoints, 0.0, sc=True)
 
     # Render Motion in Viewer

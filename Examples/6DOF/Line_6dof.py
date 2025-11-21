@@ -16,7 +16,7 @@ from Model import DHModel
 model = DHModel.get_model('6dof')
 robot = Init_Model(model, robot_name='6dof', twist_in_rads=True, plt_model=True)
 
-# Cartesian waypoints (XYZ + RPY)
+# Cartesian waypoints [x, y, z, rx, ry, rz]
 waypoints = [
     [0.2,  0.10, 0.10,  3.14159265, 0.0,       -0.52359878],
     [0.2, -0.15, 0.10,  3.14159265, 0.0,       -0.52359878],

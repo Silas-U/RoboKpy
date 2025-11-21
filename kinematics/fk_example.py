@@ -11,24 +11,20 @@ You may obtain a copy of the License at: http://www.apache.org/licenses/LICENSE-
 from Robokpy import Init_Model
 from Model import DHModel
 
-
 # Initialize Puma560 Robot
 robot_model = DHModel.get_model("Puma560")
 rb = Init_Model(robot_model, robot_name="Puma560", twist_in_rads=False)
 
 # Compute Forward Kinematics
-joint_conf = [0, 0.7854, 3.1416, 0, 0.7854, 0]  # Joint angles in radians
-rb.fk.compute(joint_conf, rads=True)
+joint_conf = [0,  0,  0,  180, 90, 0]  # Joint angles in radians
+rb.fk.compute(joint_conf)
 
 # Display End-Effector Information
-print("*** Target (XYZ) ***")
-print(rb.fk.get_target_xyz(), '\n')  # Position of end-effector
+print("Target:[px,py,pz]")
+print(rb.fk.get_target_xyz(), '\n')
 
-print("*** Euler Angles (Roll, Pitch, Yaw) ***")
-print(rb.fk.get_target_rpy(), '\n')  # Orientation of end-effector
+print("Quaternions:[qx,qy,qz,qw]")
+print(rb.fk.get_target_quart(), '\n')
 
-print("*** Target (XYZ + Roll, Pitch, Yaw) ***")
-print(rb.fk.get_target(), '\n')  # Complete pose
-
-print("*** Homogeneous Transformation Matrix ***")
-print(rb.fk.get_htm())  # 4x4 transformation matrix
+print("Target:[px,py,pz, qx,qy,qz,qw]")
+print(rb.fk.get_target(), '\n')

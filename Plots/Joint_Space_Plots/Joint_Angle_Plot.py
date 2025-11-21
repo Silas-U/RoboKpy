@@ -15,7 +15,7 @@ from Model import DHModel
 model = DHModel.get_model('Puma561')
 robot = Init_Model(model, robot_name='Puma561', plt_model=True)
 
-# Define Waypoints [x, y, z, roll, pitch, yaw]
+# Define Waypoints [x, y, z, rx, ry, rz]
 waypoints = [
     [0.2,  0.1, 0.3,  180, -90, 10],
     [0.15, 0.01, 0.1,  180, -90, 10],

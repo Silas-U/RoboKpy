@@ -1,12 +1,12 @@
-"""
-Author: Silas Udofia
-Date: 2024-08-02
-GitHub: https://github.com/Silas-U/RoboKpy/tree/main
+# """
+# Author: Silas Udofia
+# Date: 2024-08-02
+# GitHub: https://github.com/Silas-U/RoboKpy/tree/main
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at: http://www.apache.org/licenses/LICENSE-2.0
-"""
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at: http://www.apache.org/licenses/LICENSE-2.0
+# """
 
 import numpy as np
 from scipy.interpolate import make_interp_spline
@@ -70,13 +70,25 @@ class TrajectoryPlanner:
         self.traj_method = None
 
     def set_traj_time(self, t_period):
+        if type(t_period) not in [int, float]:
+            raise TypeError("traj_time must be of type integer or float")
+        
+        # if type(target_position) not in [np.ndarray, list]:
+        #     raise TypeError(f"Expected a list of cartesian waypoints but got {type(target_position)}")
+        # if type(tol) not in [int, float]:
+        #     raise TypeError("tolerance must be of type integer or float")
+        # if type(max_iter) not in [int, float]:
+        #     raise TypeError("max_iter must be of type integer or float")
+        
         self.t_traj = t_period
     
     def get_waypoint_velocities(self):
         return self.velocities
 
     def wayp_to_joint_angle(self, waypoints, xyz_mask=None):
-        print(f":Calculating required joint angles for trajectory...")
+        if type(waypoints) not in [np.ndarray, list]:
+            raise TypeError(f"Expected a list of cartesian waypoints but got {type(waypoints)}")
+        print(f"Calculating required joint angles for trajectory...")
         try:
             joint_angles = [self.ik.solve(waypoints[i], mask=xyz_mask) for i in range(len(waypoints))]
             self.model.jnt_configs = [joint_angles]
@@ -181,9 +193,9 @@ class TrajectoryPlanner:
         Returns q, qd, qdd as arrays for times t.
         """
         a0,a1,a2,a3,a4,a5 = coeffs
-        q   = a0 + a1*t +   a2*t**2 +   a3*t**3 +   a4*t**4 +   a5*t**5
-        qd  =      a1   + 2*a2*t     + 3*a3*t**2   + 4*a4*t**3   + 5*a5*t**4
-        qdd =           2*a2        + 6*a3*t       + 12*a4*t**2    + 20*a5*t**3
+        q   = a0 + a1*t + a2*t**2 + a3*t**3 + a4*t**4 + a5*t**5
+        qd  = a1 + 2*a2*t + 3*a3*t**2 + 4*a4*t**3 + 5*a5*t**4
+        qdd = 2*a2 + 6*a3*t + 12*a4*t**2 + 20*a5*t**3
         return q, qd, qdd
 
 
@@ -264,7 +276,10 @@ class TrajectoryPlanner:
             velocities[:, 0] = start_vel
         if end_vel is not None:
             velocities[:, -1] = end_vel
-    
+
+        if type(self.scale_waypoint_vel) not in [int, float]:
+            raise TypeError("scale value must be of type integer or float")
+        
         scale = self.scale_waypoint_vel
         velocities *= scale
 
@@ -314,7 +329,10 @@ class TrajectoryPlanner:
             velocities[:, 0] = start_vel
         if end_vel is not None:
             velocities[:, -1] = end_vel
-    
+
+        if type(self.scale_waypoint_vel) not in [int, float]:
+            raise TypeError("scale value must be of type integer or float")
+        
         scale = self.scale_waypoint_vel
         velocities *= scale
 
@@ -406,7 +424,6 @@ class TrajectoryPlanner:
         self.jq_jerk = jq_jerk
 
         positions = np.array(np.transpose(jq))
-
         return positions
     
     def create_traj_jointspace(self, waypoints, xyz_mask=None, n_samples=100):
@@ -434,7 +451,6 @@ class TrajectoryPlanner:
                 T = np.concatenate([pos, rot])
                 targets.append(T)
 
-            self.fk.compute(np.zeros(len(self.model.args)))
             joint_angles = [self.ik.solve(targets[i], mask=xyz_mask) for i in range(len(targets))]
 
             jnt_conf = np.array(joint_angles).T
@@ -461,7 +477,7 @@ class TrajectoryPlanner:
                 joint_trajectory = np.transpose(jq)
                 return [joint_trajectory]
             elif tr_type == 'spl':
-                joint_trajectory = self.q_spline_js(joint_angles=joint_angles, time_step=n_samples, xyz_mask=xyz_mask)
+                joint_trajectory = self.q_spline_js(joint_angles=joint_angles, time_step=n_samples)
                 return [joint_trajectory]
             else:
                 coeffs = self.quintic_trajectory_nd(
@@ -562,31 +578,23 @@ class TrajectoryPlanner:
         
         # Convert Euler angles to quaternions
         quats = R.from_euler('xyz', euler_angles).as_quat(canonical=False)
-        rotations = R.from_quat(quats)
+        rotations_quart = R.from_quat(quats)
 
         t_points = [t for t in range(0, len(wayp))]
 
         # SLERP setup
         key_times = t_points
 
-        slerp = Slerp(key_times, rotations)
+        slerp = Slerp(key_times, rotations_quart)
 
         # Interpolation times
         times = np.linspace(0, len(wayp)-1, len(positions))
 
-        interp_rots = slerp(times).as_quat(canonical=False)
-        eular = R.from_quat(interp_rots).as_euler('xyz', degrees=False)
-
-        roll = [eular[i][2] for i in range(len(eular))]
-        pitch = [eular[i][1] for i in range(len(eular))]
-        yaw = [eular[i][0] for i in range(len(eular))]
-
-        self.roll = roll
-        self.pitch = pitch
-        self.yaw = yaw
+        interp_rots_quart = slerp(times).as_quat(canonical=False)
+        self.interp_rots_quart = interp_rots_quart
 
         poses = []
-        for pos, rot in zip(positions, eular):
+        for pos, rot in zip(positions, interp_rots_quart):
             T = np.concatenate([pos, rot])
             poses.append(T)
         
@@ -594,7 +602,25 @@ class TrajectoryPlanner:
         self.trajectory = joint_angles
         return joint_angles
     
+    def interp_rots_as_eular(self):
+        eular = R.from_quat(self.interp_rots_quart).as_euler('xyz', degrees=False)
+        roll = [eular[i][2] for i in range(len(eular))]
+        pitch = [eular[i][1] for i in range(len(eular))]
+        yaw = [eular[i][0] for i in range(len(eular))]
+
+        self.roll = roll
+        self.pitch = pitch
+        self.yaw = yaw
+    
     def create_trajectory(self, waypoints, traj_method='ts', xyz_mask=None, n_samples=100):
+
+        if type(waypoints) not in [np.ndarray, list]:
+            raise TypeError(f"Expected a list of cartesian waypoints but got {type(waypoints)}")
+        if type(n_samples) not in [int]:
+            raise TypeError("n_samples must be of type integer")
+        if type(traj_method) not in [str]:
+            raise TypeError("traj_method must be of type str")
+        
         if len(waypoints) < 2:
             raise ValueError(f"Too few target poses for robot :{self.model.robot_name}: expected a sequence start and end goal poses")
         self.traj_method = traj_method
@@ -616,6 +642,11 @@ class TrajectoryPlanner:
             raise ValueError(f"Unsupported trajectory method: {traj_method}")
         
     def joint_control(self, joint_poses, n_samples=100, rads=False):
+        if type(joint_poses) not in [np.ndarray, list]:
+            raise TypeError(f"Expected a list of joint configurations but got {type(joint_poses)}")
+        if type(n_samples) not in [int]:
+            raise TypeError(f"n_samples must be of type int")
+        
         rads_to_deg = []
 
         self.traj_method = "js"

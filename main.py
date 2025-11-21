@@ -5,46 +5,35 @@ GitHub: https://github.com/Silas-U/RoboKpy/tree/main
 
 Licensed under the Apache License, Version 2.0 (the "License");
 you may not use this file except in compliance with the License.
-You may obtain a copy of the License at:
-http://www.apache.org/licenses/LICENSE-2.0
+You may obtain a copy of the License at: http://www.apache.org/licenses/LICENSE-2.0
 """
 
 from Robokpy import Init_Model
 from Model import DHModel
 
+# Initialize Robot
+model = DHModel.get_model('Puma561')
+robot = Init_Model(model, robot_name='Puma561', plt_model=True)
 
-# Initialize Puma561 Robot
-model = DHModel.get_model("Puma561")
-robot = Init_Model(model, robot_name="Puma561", plt_model=True)
-
-# Define Task-Space Waypoints
-# Format: [x, y, z, roll, pitch, yaw] in degrees
+# Define Waypoints [x, y, z, rx, ry, rz]
 waypoints = [
-    [0.20, -0.10, 0.15, 180, 0, -90],  # Target 1
-    [0.20, -0.10, 0.07, 180, 0, -30],  # Target 2
-    [0.20, -0.10, 0.15, 180, 0, -90],  # Target 3
-    [0.20,  0.10, 0.15, 180, 0, -30],  # Target 4
-    [0.20,  0.10, 0.07, 180, 0, -90],  # Target 5
-    [0.20,  0.10, 0.15, 180, 0, -30],  # Target 6
-    [0.20, -0.10, 0.15, 180, 0, -90],  # Target 1
+    [0.2,  0.1, 0.3,  180, -90.,  10],
+    [0.15,  0.01, 0.1,  180, -90.,10],
+    [0.2,  -0.1, 0.3,  180, -90., 10],
+    [0.26,  0.0, 0.17,  180, -90.,10],
+    [0.2,  0.1, 0.3,  180, -90.,  10],
 ]
 
-# Trajectory Configuration
-robot.model.set_eular_in_deg(True)    # Use degrees for Euler angles
-robot.traj.set_traj_time(5.0)        # Total trajectory time (seconds)
-robot.traj.traj_type('qu')           # Quintic trajectory
+# Trajectory Settings
+robot.model.set_eular_in_deg(True)
+robot.traj.scale_waypoint_vel = 2.0
+robot.traj.traj_type('qu')
 
-# Generate trajectory
-trajectory = robot.traj.create_trajectory(
-    waypoints, traj_method='ts', n_samples=10
-)
+# Create Task-Space Trajectory
+trajectory = robot.traj.create_trajectory(waypoints, traj_method='ts', n_samples=20)
+print("\nwaypoint velocities:\n", robot.traj.get_waypoint_velocities())
 
-# Visualization
-robot.mviz.scale_viz(0.3, 0.04)                # Scale robot for visualization
-robot.mviz.show_target(waypoints, 0.04, sc=True)  # Show waypoints in 3D
-robot.mviz.plot(
-    trajectory,
-    show_path=True,
-    show_joint_label=True,
-    repeat=True
-)
+# Visualize Robot Motion
+robot.mviz.scale_viz(0.25, 0.04)
+robot.mviz.show_target(waypoints, 0.0, sc=True)
+robot.mviz.plot(trajectory, show_path=True, show_joint_label=True, repeat=True)

@@ -20,7 +20,6 @@ def main():
     robot = Init_Model(model_data, robot_name='2dof', plt_model=True)
 
     # Define Circle Trajectory in Task Space
-    # Format: [x, y, z, roll, pitch, yaw]
     center = [
         0.30,        # X
         0.20,        # Y

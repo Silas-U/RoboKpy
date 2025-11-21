@@ -103,17 +103,17 @@ qn = [0, 0.7854, 3.1416, 0, 0.7854, 0]
 robot.fk.compute(qn, rads=True)
 
 print("End-effector transform:\n", robot.fk.get_htm(),'\n')
-print("End-effector pose:", robot.fk.get_target(),'\n')
+print("End-effector pose:\n", robot.fk.get_target(),'\n')
 ```
 ```bash
 End-effector transform
+[[ 0.00001102  0.          1.          0.59630552]
+ [-0.          1.         -0.         -0.15      ]
+ [-1.         -0.          0.00001102 -0.01435103]
+ [ 0.          0.          0.          1.        ]]
 
- [[ 0.00001102  0.          1.          0.59630552]
-  [-0.          1.         -0.          0.15      ]
-  [-1.         -0.          0.00001102 -0.01435103]
-  [ 0.          0.          0.          1.        ]] 
-
-End-effector pose: [ 0.59630552,  0.15,  -0.01435103,  -0,  1.57078531, -0 ] 
+End-effector pose: 
+[ 0.59630552 -0.15   -0.01435103  0.  0.70710289  -0.  0.70711068] # [x, y, z, rx, ry, rz, rw]
 ```
 We can also compute the robots Jacobian.
 ```python

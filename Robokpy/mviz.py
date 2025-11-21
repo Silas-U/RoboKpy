@@ -1,12 +1,12 @@
-"""
-Author: Silas Udofia
-Date: 2024-08-02
-GitHub: https://github.com/Silas-U/RoboKpy/tree/main
+# """
+# Author: Silas Udofia
+# Date: 2024-08-02
+# GitHub: https://github.com/Silas-U/RoboKpy/tree/main
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at: http://www.apache.org/licenses/LICENSE-2.0
-"""
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at: http://www.apache.org/licenses/LICENSE-2.0
+# """
 
 import numpy as np
 import matplotlib.pyplot as plt
@@ -78,6 +78,10 @@ class VizModel:
         return [x_quiver, y_quiver, z_quiver]
 
     def show_target(self, tar, axis_length=0, sc=False):
+        if type(tar) not in [np.ndarray, list]:
+            raise TypeError(f"Expected a list of cartesian targets but got {type(tar)}")
+        if type(axis_length) not in [int, float]:
+            raise TypeError("axis_length must be of type integer or float")
         for i in range(len(tar)):
             self.plot_coordinate_frame(self.ax, tar[i][:3], self.identity_rotation, axis_length=axis_length)
             if sc:
@@ -125,6 +129,10 @@ class VizModel:
 
    
     def plot(self, trajectory, show_path=False, show_joint_label=False, show_frame_label=False, show_via_points=False, show_final_pose=False, repeat=False):
+        
+        if type(trajectory) not in [np.ndarray, list]:
+            raise TypeError(f"Expected a list of cartesian waypoints but got {type(trajectory)}")
+        
         self.init()
         self.end_effector_positions = []
         self.play = True
@@ -276,6 +284,11 @@ class VizModel:
         plt.show(block=True)
 
     def scale_viz(self, scale, fram_axis_len=0):
+        if type(scale) not in [int, float]:
+            raise TypeError("scale must be of type integer or float")
+        if type(fram_axis_len) not in [int, float]:
+            raise TypeError("fram_axis_len be of type integer or float")
+        
         self.__scale = scale
         self.axis_len = fram_axis_len
         self.ax.set_xlim([-scale, scale])
@@ -283,6 +296,9 @@ class VizModel:
         self.ax.set_zlim([-scale, scale])
 
     def show_dh_model(self, joints_v=None, show_joint_label=False, show_frame_label=False):
+        if type(joints_v) not in [np.ndarray, list]:
+            raise TypeError(f"Expected a list of cartesian waypoints but got {type(joints_v)}")
+    
         n_joints = self.robot_instance.get_num_of_joints()
 
         if joints_v is None:

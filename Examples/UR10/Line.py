@@ -21,7 +21,7 @@ robot = Init_Model(
 )
 
 # Define Task-Space Waypoints
-# Format: [x, y, z, roll, pitch, yaw]
+# Format: [x, y, z, rx, ry, rz]
 waypoints = [
     [0.3,  0.2, 0.2, 3.14159265, 0., -0.52359878],
     [0.3, -0.2, 0.2, 3.14159265, 0., -0.52359878],

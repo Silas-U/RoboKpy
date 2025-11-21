@@ -1,15 +1,15 @@
-"""
-Author: Silas Udofia
-Date: 2024-08-02
-GitHub: https://github.com/Silas-U/RoboKpy/tree/main
+# """
+# Author: Silas Udofia
+# Date: 2024-08-02
+# GitHub: https://github.com/Silas-U/RoboKpy/tree/main
 
-Robot DH Parameter Library
+# Robot DH Parameter Library
 
-This module stores predefined Denavit-Hartenberg (DH) models for popular robots
-and utilities to retrieve, list, and pretty-print them.
+# This module stores predefined Denavit-Hartenberg (DH) models for popular robots
+# and utilities to retrieve, list, and pretty-print them.
 
-Licensed under the Apache License, Version 2.0
-"""
+# Licensed under the Apache License, Version 2.0
+# """
 
 import pandas as pd
 

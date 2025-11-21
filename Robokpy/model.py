@@ -1,12 +1,12 @@
-"""
-Author: Silas Udofia
-Date: 2024-08-02
-GitHub: https://github.com/Silas-U/RoboKpy/tree/main
+# """
+# Author: Silas Udofia
+# Date: 2024-08-02
+# GitHub: https://github.com/Silas-U/RoboKpy/tree/main
 
-Licensed under the Apache License, Version 2.0 (the "License");
-you may not use this file except in compliance with the License.
-You may obtain a copy of the License at: http://www.apache.org/licenses/LICENSE-2.0
-"""
+# Licensed under the Apache License, Version 2.0 (the "License");
+# you may not use this file except in compliance with the License.
+# You may obtain a copy of the License at: http://www.apache.org/licenses/LICENSE-2.0
+# """
 
 import numpy as np
 from .utils import validate_keys
@@ -14,6 +14,8 @@ from .utils import validate_keys
 class RobotModel:
     """Holds robot DH params and state used by other modules."""
     def __init__(self, args, robot_name, link_twist_in_rads=False, use_jnt_lim=False):
+        if not isinstance(robot_name, str):
+            raise ValueError("robot_name must contain only letters")
         if len(args) == 0:
             raise ValueError("DH params list cannot be empty")
         for x in args:

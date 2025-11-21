@@ -21,7 +21,7 @@ robot = Init_Model(
     plt_model=True
 )
 
-# Define waypoints in task space [x, y, z, roll, pitch, yaw]
+# Define waypoints in task space [x, y, z, rx, ry, rz]
 waypoints = [
     [0.10, 0.10, 0.10, 0.0, 0.0, 0.0],
     [0.20, 0.20, 0.10, 0.0, 0.0, 0.0],

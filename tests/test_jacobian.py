@@ -26,7 +26,7 @@ class TestJacobian(unittest.TestCase):
         self.rb.fk.compute([0, 0.7854, 3.1416, 0, 0.7854, 0], rads=True) 
         self.rb.jac.compute()
         # No error should be raised here
-        self.rb.jac.check_singularity()
+        self.rb.jac.singular_conf_check()
 
     def test_check_singularity_detected(self):
         self.rb.fk.compute([0, 0.7854, 3.1416, 0, 0.7854, 0], rads=True) 
