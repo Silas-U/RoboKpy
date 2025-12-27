@@ -120,11 +120,17 @@ class VizModel:
         # Loop through each link and apply cumulative transformations
         for i, (theta, point, axis, twist) in enumerate(zip(joint_angles, points, rotation_axes, twist_in_deg)):
 
-            twist_r = self.rotation_matrix('x', twist)
+            twist_r = self.rotation_matrix('x', twist) # twist is rotaton around x+1
             rotation_matrix_i = self.rotation_matrix(axis, theta)
-            current_rotation = np.dot(current_rotation, rotation_matrix_i) @ -twist_r
+
+            current_rotation = np.dot(current_rotation, rotation_matrix_i) @ twist_r
+
+            cu1 = current_rotation @ twist_r
+            cu2 = cu1 @ twist_r
+            cu3 = cu2 @ twist_r
+
             link_end = current_position[-1] + current_rotation @ np.array(point)
-            self.quivers += self.plot_coordinate_frame(self.ax,  point, (current_rotation @ twist_r), axis_length=self.axis_len)
+            self.quivers += self.plot_coordinate_frame(self.ax,  point, cu3, axis_length=self.axis_len)
             current_position = np.hstack((link_end, [1]))  # Homogeneous coordinates
 
    
@@ -194,14 +200,17 @@ class VizModel:
                 points.append(i)
             p = np.array(points)
 
-            if self.robot_instance.get_num_of_joints() == 2:
-                indexes = [i for i in range(0, transform_length, 2)]
-            else:
+            n_joints = self.robot_instance.get_num_of_joints()
+
+            if n_joints == 6:
                 indexes = [i for i in range(0, transform_length - 2, 2)]
                 indexes.append(-1)
+            else:
+                indexes = [i for i in range(0, transform_length, 2)]
+               
 
             link_lengths = [p[i] for i in indexes]
-            rotation_axes = ['z'] * transform_length
+            rotation_axes = ['z'] * n_joints
             twist = [dh[3] for dh in dhparams]
 
             self.arm_line.set_data(p[:, 0], p[:, 1])
@@ -267,8 +276,8 @@ class VizModel:
                 self.via_points.set_data(p_end_effector[:, 0], p_end_effector[:, 1])
                 self.via_points.set_3d_properties(p_end_effector[:, 2])
 
-
             self.cumulative_rotation(q, link_lengths, rotation_axes, self.robot_instance, twist)
+            
             return self.arm_line, self.jnt, self.end_effector_line
         
         self.anim = FuncAnimation(

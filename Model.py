@@ -68,5 +68,25 @@ class DHModel(BaseDHModel):
             {"joint_name": "j1", "joint_type": "r", "link_length": 0.4, "twist": 0, "joint_offset": 0.2, "theta": 0, 'offset': 0.0},
             {"joint_name": "j2", "joint_type": "r", "link_length": 0.4, "twist": 0, "joint_offset": 0, "theta": 0, 'offset': 0.0}
         ],
+
+         '3dof': [
+            {'joint_name': 'j1', 'joint_type': 'r', 'link_length': 0.0,  'twist':90.0, 'joint_offset': 1.0,  'theta': 0.0, 'offset': 0.0},
+            {'joint_name': 'j2', 'joint_type': 'r', 'link_length': 2.0, 'twist': 0.0,  'joint_offset': 0.0, 'theta': 0.0, 'offset': 0.0},
+            {'joint_name': 'j3', 'joint_type': 'r', 'link_length': 2.0, 'twist': 0.0,  'joint_offset': 0.0, 'theta': 0.0, 'offset': 0.0}
+        ], 
+
+         '4dof': [
+            {'joint_name': 'j1', 'joint_type': 'r', 'link_length': 0.0,  'twist':90.0, 'joint_offset': 2.0,  'theta': 0.0, 'offset': 0.0},
+            {'joint_name': 'j2', 'joint_type': 'r', 'link_length': 2.0, 'twist': 0.0,  'joint_offset': 0.0, 'theta': 0.0, 'offset': 0.0},
+            {'joint_name': 'j3', 'joint_type': 'r', 'link_length': 2.0, 'twist': 0.0,  'joint_offset': 0.0, 'theta': 0.0, 'offset': 0.0},
+            {'joint_name': 'j4', 'joint_type': 'r', 'link_length': 1.0, 'twist': 0.0,  'joint_offset': 0.0,  'theta': 0.0, 'offset': 0.0},
+        ], 
+         '5dof': [
+            {'joint_name': 'j1', 'joint_type': 'r', 'link_length': 0.0,  'twist':90.0, 'joint_offset': 1.0,  'theta': 0.0, 'offset': 0.0},
+            {'joint_name': 'j2', 'joint_type': 'r', 'link_length': 2.0, 'twist': 0.0,  'joint_offset': 0.0, 'theta': 0.0, 'offset': 0.0},
+            {'joint_name': 'j3', 'joint_type': 'r', 'link_length': 2.0, 'twist': 0.0,  'joint_offset': 0.0, 'theta': 0.0, 'offset': 0.0},
+            {'joint_name': 'j4', 'joint_type': 'r', 'link_length': 2.0, 'twist': 0.0,  'joint_offset': 0.0,  'theta': 0.0, 'offset': 0.0},
+            {'joint_name': 'j4', 'joint_type': 'r', 'link_length': 1.0, 'twist': 0.0,  'joint_offset': 0.0,  'theta': 0.0, 'offset': 0.0},
+        ], 
     }
 
